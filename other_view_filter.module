@@ -20,6 +20,7 @@ function other_view_filter_views_api() {
  * Implements hook_views_data_alter().
  */
 function other_view_filter_views_data_alter(&$data) {
+  // @todo: Make this work with users, files, and other entity types.
   $data['node']['other_view']['title'] = 'Other view result';
   $data['node']['other_view']['help'] = 'Filters this view against results of selected other view.';
   $data['node']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
