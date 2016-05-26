@@ -1,6 +1,8 @@
 <?php
 /**
- *
+ * @file
+ * Creates a filter that allows requiring or excluding entities selected
+ * by another view.
  */
 
 require_once 'other_view_handler_filter_entity.inc';
@@ -27,6 +29,7 @@ function other_view_filter_views_data_alter(&$data) {
  * Implements hook_form_FORM_ID_alter().
  */
 function other_view_filter_form_views_ui_config_item_form_alter(&$form, &$form_state) {
+  // Force single filter selection.
   if($form['#section'] == 'list_pane-filter-other_view') {
     $form['options']['value']['#multiple'] = 0;
   }
