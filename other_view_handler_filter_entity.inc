@@ -55,6 +55,11 @@ class other_view_handler_filter_entity extends views_handler_filter_in_operator 
 
     return $this->entity_type;
   }
+  function value_form(&$form, &$form_state) {
+    parent::value_form($form, $form_state);
+    unset($form['value']['#options']['all']);
+    $form['value']['#multiple'] = false;
+  }
 
   /**
    * Return a list of all available views.
@@ -63,7 +68,24 @@ class other_view_handler_filter_entity extends views_handler_filter_in_operator 
     if (!isset($this->value_options)) {
       // Create a list of all the view:display combos.
       $this->value_title = t('View: display');
-      $this->value_options = views_get_views_as_options();
+      $all_views = views_get_all_views();
+      $options = array();
+      foreach($all_views as $one_view) {
+        // Only use views that output entities that might be in this view.
+        if ($one_view->base_table == $this->table) {
+          foreach($one_view->display as $display) {
+            // Don't let users filter views display results recursively.
+            if ("{$this->view->name}:{$this->view->current_display}" !== "{$one_view->name}:{$display->id}") {
+              $options["{$one_view->name}:{$display->id}"] = "{$one_view->human_name}: {$display->display_title}";
+            }
+          }
+        }
+      }
+      $this->value_options = $options;
+      // @todo: figure out why this is somtimes an array and sometimes not.
+      if (!is_array($this->value)) {
+        $this->value = array($this->value => $this->value);
+      }
     }
   }
 

@@ -20,18 +20,14 @@ function other_view_filter_views_api() {
  * Implements hook_views_data_alter().
  */
 function other_view_filter_views_data_alter(&$data) {
-  // @todo: Make this work with users, files, and other entity types.
+  // @todo: Make this work with all entity types.
   $data['node']['other_view']['title'] = 'Other view result';
   $data['node']['other_view']['help'] = 'Filters this view against results of selected other view.';
   $data['node']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function other_view_filter_form_views_ui_config_item_form_alter(&$form, &$form_state) {
-  // Force single filter selection.
-  if($form['#section'] == 'list_pane-filter-other_view') {
-    $form['options']['value']['#multiple'] = 0;
-  }
+  $data['users']['other_view']['title'] = 'Other view result';
+  $data['users']['other_view']['help'] = 'Filters this view against results of selected other view.';
+  $data['users']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
+  $data['file_managed']['other_view']['title'] = 'Other view result';
+  $data['file_managed']['other_view']['help'] = 'Filters this view against results of selected other view.';
+  $data['file_managed']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
 }
