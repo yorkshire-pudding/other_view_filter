@@ -5,8 +5,6 @@
  * by another view.
  */
 
-require_once 'other_view_handler_filter_entity.inc';
-
 /**
  * Implements hook_views_api().
  */
@@ -14,20 +12,4 @@ function other_view_filter_views_api() {
   return array(
     'api' => 3,
   );
-}
-
-/**
- * Implements hook_views_data_alter().
- */
-function other_view_filter_views_data_alter(&$data) {
-  // @todo: Make this work with all entity types.
-  $data['node']['other_view']['title'] = 'Other view result';
-  $data['node']['other_view']['help'] = 'Filters this view against results of selected other view.';
-  $data['node']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
-  $data['users']['other_view']['title'] = 'Other view result';
-  $data['users']['other_view']['help'] = 'Filters this view against results of selected other view.';
-  $data['users']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
-  $data['file_managed']['other_view']['title'] = 'Other view result';
-  $data['file_managed']['other_view']['help'] = 'Filters this view against results of selected other view.';
-  $data['file_managed']['other_view']['filter']['handler'] = 'other_view_handler_filter_entity';
 }

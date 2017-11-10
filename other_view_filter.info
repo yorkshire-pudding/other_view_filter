@@ -1,6 +1,10 @@
 name = Other View filter
 description = Adds a filter to views that uses the results of another view.
+package = Views
 core = 7.x
+
+; Handlers
+files[] = other_view_filter_handler_filter_view.inc
 
 dependencies[] = ctools
 dependencies[] = views

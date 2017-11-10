@@ -12,8 +12,9 @@
  *
  * @ingroup views_filter_handlers
  */
-class other_view_handler_filter_entity extends views_handler_filter_in_operator {
+class other_view_filter_handler_filter_view extends views_handler_filter_in_operator {
   var $value_form_type = 'select';
+
   /**
    * Stores the entity type on which the filter filters.
    *
@@ -55,10 +56,11 @@ class other_view_handler_filter_entity extends views_handler_filter_in_operator 
 
     return $this->entity_type;
   }
+
   function value_form(&$form, &$form_state) {
     parent::value_form($form, $form_state);
     unset($form['value']['#options']['all']);
-    $form['value']['#multiple'] = false;
+    $form['value']['#multiple'] = FALSE;
   }
 
   /**
@@ -82,6 +84,7 @@ class other_view_handler_filter_entity extends views_handler_filter_in_operator 
         }
       }
       $this->value_options = $options;
+
       // @todo: figure out why this is somtimes an array and sometimes not.
       if (!is_array($this->value)) {
         $this->value = array($this->value => $this->value);
@@ -95,22 +98,25 @@ class other_view_handler_filter_entity extends views_handler_filter_in_operator 
   function query() {
     $this->ensure_my_table();
     // This only handles one at a time. If there are more, it uses the last.
+    $this->value = is_array($this->value) ? $this->value : array($this->value);
     // @todo: enforce single selection.
     foreach($this->value as $other_view_name_display) {
-      $other_view_name_display_array = explode(':', $other_view_name_display);
-      $other_view_name = $other_view_name_display_array[0];
-      $other_view_display = $other_view_name_display_array[1];
+      list($other_view_name, $other_view_display) = explode(':', $other_view_name_display);
     }
     // Figure out what this entity id is called (eg. nid, uid, etc.)
     $entity_info = entity_get_info($this->entity_type);
     $id_id = $entity_info['entity keys']['id'];
     // Get the results of the specified view/display combo.
-    $other_view_result = views_get_view_result($other_view_name, $other_view_display);
     $other_ids = array();
-    foreach($other_view_result as $result) {
-      $other_ids[] = $result->$id_id;
+    if (isset($other_view_name, $other_view_display)) {
+      $other_view_result = views_get_view_result($other_view_name, $other_view_display);
+      foreach($other_view_result as $result) {
+        $other_ids[] = $result->{$id_id};
+      }
     }
     // Add them as a condition to the query.
-    $this->query->add_where(0, $id_id, $other_ids, $this->operator);
+    if ($other_ids) {
+      $this->query->add_where(0, $this->table_alias . '.' . $id_id, $other_ids, $this->operator);
+    }
   }
 }
