@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of views_handler_filter_entity_other_view
+ * Definition of views_handler_filter_entity_other_view filter.
  */
 
 /**
@@ -66,7 +66,8 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
 
     // If the current filter is under a relationship you can't be sure that the
     // entity type of the view is the entity type of the current filter
-    // For example a filter from a node author on a node view does have users as entity type.
+    // For example a filter from a node author on a node view does
+    // have users as entity type.
     if (!empty($this->options['relationship']) && $this->options['relationship'] != 'none') {
       $relationships = $this->view->display_handler->get_option('relationships');
 
@@ -109,11 +110,11 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
     $views = views_get_all_views();
     $this->value_options = array();
 
-    foreach($views as $view) {
+    foreach ($views as $view) {
 
       // Only use views that output entities that might be in this view.
       if ($view->base_table == $this->table) {
-        foreach($view->display as $display) {
+        foreach ($view->display as $display) {
 
           // Don't let users filter views display results recursively.
           if ("{$this->view->name}:{$this->view->current_display}" !== "{$view->name}:{$display->id}") {
@@ -137,13 +138,13 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
     $id_key = $entity_info['entity keys']['id'];
 
     $ids = array();
-    foreach($this->value as $value) {
+    foreach ($this->value as $value) {
       list($name, $display) = explode(':', $value, 2);
 
       if ($name && $display) {
         // Get the results of the specified view/display combo.
         $results = views_get_view_result($name, $display);
-        foreach($results as $result) {
+        foreach ($results as $result) {
           $ids[$result->{$id_key}] = $result->{$id_key};
         }
       }
@@ -159,4 +160,5 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
       $this->query->add_where(0, 1, 2, '=');
     }
   }
+
 }

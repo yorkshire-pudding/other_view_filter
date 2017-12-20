@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * Creates a filter that allows requiring or excluding entities selected
- * by another view.
+ * Filter that allows requiring or excluding entities selected by another view.
  */
 
 /**
