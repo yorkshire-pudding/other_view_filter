@@ -39,6 +39,16 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   }
 
   /**
+   * {@inheritdoc}
+   */
+  function option_definition() {
+    $options = parent::option_definition();
+    // Set "not in" operator to have usual use case selected by default.
+    $options['operator']['default'] = 'not in';
+    return $options;
+  }
+
+  /**
    * Set and returns the entity_type.
    *
    * @return string
@@ -76,6 +86,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   function value_form(&$form, &$form_state) {
     parent::value_form($form, $form_state);
     unset($form['value']['#options']['all']);
+
     $form['user_warning'] = array(
       '#markup' => t(
         'Using more than 1 view in "@input" section will strongly decrease your site performance.',
@@ -138,9 +149,14 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
       }
     }
 
-    // Add them as a condition to the query.
+    // Apply filter if selected views return some results.
     if ($ids) {
-      $this->query->add_where(0, $this->table_alias . '.' . $id_key, array_values($ids), $this->operator);
+      $ids = array_values($ids);
+      $this->query->add_where(0, $this->table_alias . '.' . $id_key, $ids, $this->operator);
+    }
+    // Prevent any results display if selected views return empty result.
+    elseif ($this->operator === 'in') {
+      $this->query->add_where(0, 1, 2, '=');
     }
   }
 }
