@@ -153,11 +153,11 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
     // Apply filter if selected views return some results.
     if ($ids) {
       $ids = array_values($ids);
-      $this->query->add_where(0, $this->table_alias . '.' . $id_key, $ids, $this->operator);
+      $this->query->add_where($this->options['group'], $this->table_alias . '.' . $id_key, $ids, $this->operator);
     }
     // Prevent any results display if selected views return empty result.
     elseif ($this->operator === 'in') {
-      $this->query->add_where(0, 1, 2, '=');
+      $this->query->add_where($this->options['group'], 1, 2, '=');
     }
   }
 
