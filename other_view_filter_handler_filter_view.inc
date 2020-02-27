@@ -130,6 +130,21 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * {@inheritdoc}
    */
+  public function accept_exposed_input($input) {
+    $value = $this->value;
+    $return = parent::accept_exposed_input($input);
+
+    // If the parent method produced a nested array, remove the nesting.
+    if ($this->value !== $value && is_array($this->value) && count($this->value) === 1) {
+      $this->value = reset($this->value);
+    }
+
+    return $return;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   function query() {
     $this->ensure_my_table();
 
