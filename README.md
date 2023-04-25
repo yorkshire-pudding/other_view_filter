@@ -69,12 +69,6 @@ Link to the repo's issue queue.
 Bugs and Feature Requests should be reported in the Issue Queue:
 https://github.com/backdrop-contrib/other_view_filter/issues.
 
-
-Credits
--------
-- Ported to Backdrop CMS by - [Martin Price](https://github.com/yorkshire-pudding) - [System Horizons](https://www.systemhorizons.co.uk).
-- Port sponsored by [System Horizons](https://www.systemhorizons.co.uk).
-
 Current Maintainers
 -------------------
 <!--
