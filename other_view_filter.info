@@ -1,10 +1,10 @@
-name = Other View filter
-description = Adds a filter to views that uses the results of another view.
+name = Other View Filter
+description = Filter views using the results of another view.
+backdrop = 1.x
+type = module
 package = Views
-core = 7.x
+tags[] = Content
+tags[] = Filters
+tags[] = Site Architecture
 
-; Handlers
-files[] = other_view_filter_handler_filter_view.inc
-
-dependencies[] = ctools
 dependencies[] = views

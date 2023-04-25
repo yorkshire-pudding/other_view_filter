@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Views hooks for Other View filter module.

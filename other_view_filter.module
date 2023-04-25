@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Filter that allows requiring or excluding entities selected by another view.
@@ -11,5 +10,14 @@
 function other_view_filter_views_api() {
   return array(
     'api' => 3,
+  );
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function other_view_filter_autoload_info() {
+  return array(
+    'other_view_filter_handler_filter_view' => 'includes/other_view_filter_handler_filter_view.inc',
   );
 }

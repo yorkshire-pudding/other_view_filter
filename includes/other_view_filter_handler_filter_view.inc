@@ -1,19 +1,21 @@
 <?php
-
 /**
  * @file
- * Definition of views_handler_filter_entity_other_view filter.
+ * Contains other_view_filter_handler_filter_view.
  */
 
 /**
- * Filter class which allows to filter by certain bundles of an entity.
- *
- * This class provides workarounds for taxonomy and comment.
+ * Filter class which allows to filter by another view.
  *
  * @ingroup views_filter_handlers
  */
 class other_view_filter_handler_filter_view extends views_handler_filter_in_operator {
-  var $value_form_type = 'select';
+  /**
+   * Stores the form type.
+   *
+   * @var string
+   */
+  public $value_form_type = 'select';
 
   /**
    * Stores the entity type on which the filter filters.
@@ -25,7 +27,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * {@inheritdoc}
    */
-  function init(&$view, &$options) {
+  public function init(&$view, &$options) {
     parent::init($view, $options);
     $this->get_entity_type();
   }
@@ -33,7 +35,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * {@inheritdoc}
    */
-  function construct() {
+  public function construct() {
     parent::construct();
     $this->value_title = t('View: display');
   }
@@ -41,7 +43,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * {@inheritdoc}
    */
-  function option_definition() {
+  public function option_definition() {
     $options = parent::option_definition();
     // Set "not in" operator to have usual use case selected by default.
     $options['operator']['default'] = 'not in';
@@ -54,7 +56,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
    * @return string
    *   The entity type on the filter.
    */
-  function get_entity_type() {
+  public function get_entity_type() {
     if (isset($this->entity_type)) {
       return $this->entity_type;
     }
@@ -84,7 +86,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * {@inheritdoc}
    */
-  function value_form(&$form, &$form_state) {
+  public function value_form(&$form, &$form_state) {
     parent::value_form($form, $form_state);
     unset($form['value']['#options']['all']);
 
@@ -102,7 +104,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * Return a list of all available views.
    */
-  function get_value_options() {
+  public function get_value_options() {
     if (isset($this->value_options)) {
       return;
     }
@@ -145,7 +147,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
   /**
    * {@inheritdoc}
    */
-  function query() {
+  public function query() {
     $this->ensure_my_table();
 
     // Figure out what this entity id is called (eg. nid, uid, etc.)
