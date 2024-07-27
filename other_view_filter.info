@@ -2,6 +2,10 @@ name = Other View Filter
 description = Filter views using the results of another view.
 backdrop = 1.x
 type = module
+
+maintainers[yorkshire-pudding] = Martin Price
+maintainers_wanted = TRUE
+
 package = Views
 tags[] = Content
 tags[] = Filters
