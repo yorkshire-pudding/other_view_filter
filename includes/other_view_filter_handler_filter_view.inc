@@ -174,7 +174,7 @@ class other_view_filter_handler_filter_view extends views_handler_filter_in_oper
     }
     // Prevent any results display if selected views return empty result.
     elseif ($this->operator === 'in') {
-      $this->query->add_where($this->options['group'], 1, 2, '=');
+      $this->query->add_where_expression($this->options['group'], '1 = 2');
     }
   }
 
